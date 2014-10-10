@@ -50,7 +50,7 @@ public class Test {
 		} else {
 			System.out.println("Immutable : " + x + " ; Mutable : "
 					+ FabriquerNat.mutable(x));
-			x = FabriquerNat.mutable(x);
+			// Optimisation : x = FabriquerNat.mutable(x); (passage en mutable pour les calculs intensifs)
 		}
 		for (int i = 0; i < 100000000; i++) {
 			x = x.somme(cinq);
