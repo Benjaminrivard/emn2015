@@ -1,7 +1,6 @@
 package tp1.heritageAscendant;
 
 import tp1.Messages;
-import tp1.Nat;
 import tp1.NombreNaturel;
 
 public class IntPositif implements NombreNaturel {
@@ -17,7 +16,7 @@ public class IntPositif implements NombreNaturel {
 		this.val = 0;
 	}
 
-	public IntPositif(Nat pred) {
+	public IntPositif(NombreNaturel pred) {
 		this.val = pred.val() + 1;
 	}
 
