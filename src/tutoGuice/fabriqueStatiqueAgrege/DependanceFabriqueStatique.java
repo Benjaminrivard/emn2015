@@ -11,15 +11,13 @@ interface FabriqueI {
 }
 
 class FabriquerI {
-	public static I uneImplem = new FabriqueI() {
-		public I creer(){ return new B(); }
-	}.creer();
+	public static FabriqueI uneImplem;
 }
 
 class A {
 	private I x;
 	public A(){
-		this.x = FabriquerI.uneImplem;
+		this.x = FabriquerI.uneImplem.creer();
 	}
 	public A(I x){
 		this.x = x;
@@ -42,20 +40,23 @@ public class DependanceFabriqueStatique {
 		 * Changement de classe d'implémentation au niveau de la classe : OUI
 		 */
 		// Préambule
-		FabriquerI.uneImplem = new FabriqueI() {
+		FabriqueI fabB = new FabriqueI() {
+			public I creer(){ return new B(); }
+		};
+		FabriqueI fabC = new FabriqueI() {
 			public I creer(){ return new C(); }
-		}.creer();
+		};
+		FabriquerI.uneImplem = fabC;
 		// Solution 1
 		A a = new A();
 		System.out.println(a);
 		
-		// Solution 2
-		a = new A(FabriquerI.uneImplem); // A ajouter systématiquement
-		System.out.println(a);
+		// Solution 2 : inutile
+
 		/*
 		 * Changement au niveau de l'instance : OUI
 		 */
-		a.setX(new B());
+		a.setX(fabB.creer());
 		System.out.println(a);
 	}
 

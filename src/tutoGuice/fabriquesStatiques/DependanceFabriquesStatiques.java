@@ -1,4 +1,4 @@
-package tutoGuice.fabriqueStatiqueAgregeant;
+package tutoGuice.fabriquesStatiques;
 
 interface I {}
 
@@ -6,10 +6,18 @@ class B implements I { }
 
 class C implements I {}
 
+interface FabriqueI {
+	I creer();
+}
+
+class FabriquerI {
+	public static FabriqueI uneImplem;
+}
+
 class A {
 	private I x;
 	public A(){
-		this.x = new B();
+		this.x = FabriquerI.uneImplem.creer();
 	}
 	public A(I x){
 		this.x = x;
@@ -27,36 +35,42 @@ class A {
 
 interface FabriqueA {
 	default A creer(){
-		return new A();
+		A r = new A(); 
+		return r; 
 	}
 	default A creer(I x){
-		 A r = new A(x); 
-		 return r;	
+		A r = new A(x); 
+		return r;
 	}
 }
 
 class FabriquerA {
-	public static FabriqueA uneConfig;
+	public static FabriqueA config;
 }
 
-
-
-public class DependanceFabriqueStatique {
+public class DependanceFabriquesStatiques {
 
 	public static void main(String[] args) {
 		/*
 		 * Changement de classe d'implémentation au niveau de la classe : OUI
 		 */
 		// Préambule
+		FabriqueI fabB = new FabriqueI() {
+			public I creer(){ return new B(); }
+		};
+		FabriqueI fabC = new FabriqueI() {
+			public I creer(){ return new C(); }
+		};
+		FabriquerI.uneImplem = fabC;
 		@SuppressWarnings("unused")
-		FabriqueA fabA_B = new FabriqueA() {};
+		FabriqueA fabA_Defaut = new FabriqueA() {};
 		FabriqueA fabA_C = new FabriqueA() {
-			public A creer(){ return this.creer(new C()); }
+			public A creer(){ return this.creer(fabC.creer()); }
 		}; 
-		FabriquerA.uneConfig = fabA_C; 
-		
+		FabriquerA.config = fabA_C; // ou: = fabA_Defaut; 
+
 		// Solution 1
-		A a = FabriquerA.uneConfig.creer();
+		A a = FabriquerA.config.creer();
 		System.out.println(a);
 		
 		// Solution 2 : inutile
@@ -64,7 +78,7 @@ public class DependanceFabriqueStatique {
 		/*
 		 * Changement au niveau de l'instance : OUI
 		 */
-		a.setX(new B());
+		a.setX(fabB.creer());
 		System.out.println(a);
 	}
 

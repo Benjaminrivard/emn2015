@@ -31,22 +31,6 @@ class A {
 	}
 }
 
-class ModuleB extends AbstractModule {
-	@Override
-	protected void configure() {
-		bind(I.class).to(B.class);
-	}
-}
-
-class ModuleC extends AbstractModule {
-	@Override
-	protected void configure() {
-		bind(I.class).to(C.class);
-	}
-}
-
-
-
 public class DependanceParInjection {
 
 	public static void main(String[] args) {
@@ -54,20 +38,32 @@ public class DependanceParInjection {
 		 * Changement de classe d'implémentation au niveau de la classe : OUI
 		 */
 		// Préambule
-		Injector injector = Guice.createInjector(new ModuleC());
+		AbstractModule moduleB = new AbstractModule(){
+			@Override
+			protected void configure() {
+				bind(I.class).to(B.class);
+			}
+		};
+		AbstractModule moduleC = new AbstractModule(){
+			@Override
+			protected void configure() {
+				bind(I.class).to(C.class);
+			}
+		};
+		
+		Injector injectorC = Guice.createInjector(moduleC);
+		Injector injectorB = Guice.createInjector(moduleB);
 
 		// Solution 1
-		A a = injector.getInstance(A.class);
+		A a = injectorC.getInstance(A.class);
 		System.out.println(a);
 		
-		// Solution 2
-		a = injector.getInstance(A.class);
-		System.out.println(a);
+		// Solution 2 : inutile
 
 		/*
 		 * Changement au niveau de l'instance : OUI
 		 */
-		a.setX(new B());
+		a.setX(injectorB.getInstance(I.class));
 		System.out.println(a);
 	}
 
