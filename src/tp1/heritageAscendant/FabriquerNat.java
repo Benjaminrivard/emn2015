@@ -24,4 +24,12 @@ public class FabriquerNat {
 			throw new IllegalArgumentException(n + Messages.NAT_NON_MUTABLE);
 		}
 	}
+	
+	public static Nat cloner(Nat n) {
+		if (n instanceof Mutable) {
+			return MUTABLE.creer(n.val());
+		} else {
+			return n;
+		}
+	}
 }
