@@ -8,6 +8,7 @@ import tp1.Z;
 public abstract class QDeleguant implements Q {
 	protected Rationnel rat;
 
+
 	public Z numerateur() {
 		return rat.numerateur();
 	}

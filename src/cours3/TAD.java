@@ -133,11 +133,11 @@ class ImplemModule implements Module<ImplemEtat> {
 		return this.creer(0);
 	}
 
-	private static Module<?> m = new ImplemModule();
+	private static Module<? extends Etat> m = new ImplemModule();
 
 	// Fonction permettant l'accès à l'unique instance après abstraction du type
 	// -> Usage d'un type existentiel
-	public static Module<?> abstraction() {
+	public static Module<? extends Etat> abstraction() {
 		return m;
 	}
 
