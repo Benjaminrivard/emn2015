@@ -12,8 +12,8 @@ interface Ensemble3 {
 	// Destructeurs
 	int element();
 	Ensemble3 reste();
-	default Iterateur iterateur(){
-		return new Iterateur(this);
+	default Iterateur3 iterateur(){
+		return new Iterateur3(this);
 	}
 	Ensemble3 gauche();
 	Ensemble3 droit();
@@ -28,11 +28,11 @@ interface Ensemble3 {
 /*
  * Les itérateurs sont supposés mutables, conforméménet à l'interface Java.
  */
-class Iterateur {
+class Iterateur3 {
 	private Ensemble3 reste;
 	private int element;
 	
-	public Iterateur(Ensemble3 ens){
+	public Iterateur3(Ensemble3 ens){
 		decomposer(ens);
 	}
 	private void decomposer(Ensemble3 ens){
@@ -235,13 +235,13 @@ class Union3 implements Ensemble3 {
 		
 	@Override
 	public int element() {
-		Iterateur i = this.iterateur();
+		Iterateur3 i = this.iterateur();
 		return i.suivant();
 	}
 	
 	@Override
 	public Ensemble3 reste() {
-		Iterateur i = this.iterateur();
+		Iterateur3 i = this.iterateur();
 		return i.reste();
 	}
 
@@ -268,7 +268,7 @@ class Union3 implements Ensemble3 {
 }
 
 
-public class EnsemblesIterablesAvecIterateurs {
+public class EnsemblesIterablesAvecIterateur {
 
 	public static void main(String[] args) {
 		Ensemble3 a = new Cons3(1, Vide3.SINGLETON);
