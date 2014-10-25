@@ -1,4 +1,4 @@
-package cours3;
+package cours3.exemples;
 
 import java.util.Collections;
 import java.util.List;

@@ -1,4 +1,4 @@
-package cours3;
+package cours3.exemples;
 
 enum Axe {
 	X, Y;
